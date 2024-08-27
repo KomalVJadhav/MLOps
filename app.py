@@ -17,7 +17,8 @@ clf = pickle.load(model_pickle)
 
 @app.route("/prediction", methods =['POST'])
 def prediction():
-    """Returns loa application status using ML model
+    """
+    Returns loa application status using ML model
     """
     loan_req = requests.get_json()
     print(loan_req)
