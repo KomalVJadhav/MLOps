@@ -1,5 +1,9 @@
-from flask import Flask,requests
+from flask import Flask,request
 import pickle
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+
+warnings.simplefilter('ignore', InconsistentVersionWarning)
 
 app = Flask(__name__)
 
@@ -11,8 +15,11 @@ def hello_world():
 def ping():
     return "<p>I am in the ping api</p>"
 
-model_pickle = open("./classifier.pkl", "rb")
-clf = pickle.load(model_pickle)
+# model_pickle = open("./classifier.pkl", "rb")
+# clf = pickle.load(model_pickle)
+
+with open('classifier.pkl', 'rb') as model_pickle:
+    clf = pickle.load(model_pickle)
 # defining the endpoint which will make the prediction
 
 @app.route("/prediction", methods =['POST'])
@@ -20,7 +27,7 @@ def prediction():
     """
     Returns loa application status using ML model
     """
-    loan_req = requests.get_json()
+    loan_req = request.get_json()
     print(loan_req)
 
     if loan_req['Gender'] == "Male":
