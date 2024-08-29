@@ -7,11 +7,11 @@ def client():
     return app.test_client()
 
 def test_ping(client):
-    resp = client('/ping')
+    resp = client.get('/ping')
     assert resp.status_code== 200
 
 def test_root(client):
-    resp = client('/')
+    resp = client.get('/')
     assert resp.status_code == 200
 
 # def test_predict(client):
